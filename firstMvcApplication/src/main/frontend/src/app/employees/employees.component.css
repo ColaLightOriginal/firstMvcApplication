@@ -1,0 +1,15 @@
+ul{
+    width: 50%;
+}
+
+#employeesList li:hover{
+    background-color: #5780cd;
+}
+
+app-delete-button{
+    float:right;
+}
+
+app-show-tasks-button{
+    float:right;
+}

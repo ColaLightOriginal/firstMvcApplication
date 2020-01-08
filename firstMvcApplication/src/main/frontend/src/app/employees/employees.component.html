@@ -1,0 +1,18 @@
+<div id="employeesList">
+    <ul class="list group">
+        <h5>Employees</h5>
+        <li *ngFor="let emp of employees" class="list-group-item">
+            <span (click)="ngOnClick(emp.id)">Id: {{emp.id}} {{emp.name}} {{emp.surname}} </span>
+            <app-delete-button (click)="removeEmployee(emp.id)"></app-delete-button>
+            <app-show-tasks-button (click)="showEmployeeTasks(emp.id)"></app-show-tasks-button>
+        </li>
+    </ul>
+</div>
+
+<ul class="list group">
+    <h5>Tasks</h5>
+    <li *ngFor="let task of tasks" class="list-group-item">
+        <span>Id: {{task.id}} </span>
+        <span>{{task.description}}</span>
+    </li>
+</ul>
