@@ -16,7 +16,11 @@ public class EmployeeRepository implements EmployeesRepositoryInterface{
     @Autowired
     private EntityManager sessionFactory;
 
+    @Autowired
+    private TasksRepository tasksRepository;
+
     public EmployeeRepository() {
+        this.tasksRepository= new TasksRepository();
     }
 
     @Override

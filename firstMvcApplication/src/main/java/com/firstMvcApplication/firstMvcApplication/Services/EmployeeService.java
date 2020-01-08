@@ -1,4 +1,5 @@
 package com.firstMvcApplication.firstMvcApplication.Services;
+import com.firstMvcApplication.firstMvcApplication.Repositories.TasksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.firstMvcApplication.firstMvcApplication.Classes.Employee;
@@ -11,6 +12,9 @@ public class EmployeeService {
 
     @Autowired
     private final EmployeeRepository employeesRepository = new EmployeeRepository();
+
+    @Autowired
+    private final TasksRepository tasksRepository = new TasksRepository();
 
     public List<Employee> getAllEmployees(){
         return employeesRepository.findAll();
@@ -29,6 +33,7 @@ public class EmployeeService {
     }
 
     public void deleteEmployee(int id){
+        tasksRepository.deleteEmpTasks(id);
         employeesRepository.removeEmployee(id);
     }
 }

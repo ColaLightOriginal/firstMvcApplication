@@ -1,16 +1,22 @@
 package com.firstMvcApplication.firstMvcApplication.Repositories;
 
+
 import com.firstMvcApplication.firstMvcApplication.Classes.Task;
 import com.firstMvcApplication.firstMvcApplication.Interfaces.TasksRepositoryInterface;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Predicate;
+
+import static org.hibernate.cache.spi.support.SimpleTimestamper.next;
 
 @Repository
 public class TasksRepository implements TasksRepositoryInterface {
 
-    private List<Task> tasks = new LinkedList<Task>();
+    private List<Task> tasks = new ArrayList<Task>();
 
     public TasksRepository() {
         tasks.add(new Task(1, 0, "Podlanie kwiatów", 1));
@@ -73,5 +79,19 @@ public class TasksRepository implements TasksRepositoryInterface {
     @Override
     public void addTask(int employeeId, String description, int priority){
         tasks.add(new Task(getMaxId()+1,employeeId,description,priority));
+    }
+
+    public void deleteEmpTasks(int empId){
+        Predicate<Task> isDeletedEmpTask = task -> {
+            return task.getId() == empId;
+        };
+        this.tasks.stream().filter(isDeletedEmpTask);
+        this.tasks.removeIf(isDeletedEmpTask);
+//        Iterator<Task> tsk = tasks.iterator();
+//        Task actualTask = tasks.get(0);
+//        while(tsk.hasNext()){
+//            if(actualTask.getId()==empId) tsk.remove();
+//            actualTask = tsk.next();
+//        }
     }
 }
