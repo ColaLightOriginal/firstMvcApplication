@@ -84,4 +84,16 @@ public class TasksRepository implements TasksRepositoryInterface {
             e.printStackTrace();
         }
     }
+
+    public void removeEmpTask(int empId){
+        try{
+            Session session = sessionFactory.unwrap(Session.class);
+            List<Task> resultList = getEmpTasks(empId);
+            session.delete(resultList);
+            session.getTransaction().commit();
+            session.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 }

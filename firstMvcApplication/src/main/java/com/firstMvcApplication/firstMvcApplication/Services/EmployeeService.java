@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.firstMvcApplication.firstMvcApplication.Classes.Employee;
 import com.firstMvcApplication.firstMvcApplication.Repositories.EmployeeRepository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -32,8 +33,9 @@ public class EmployeeService {
         employeesRepository.addEmployee(name, surname);
     }
 
+    @Transactional
     public void deleteEmployee(int id){
-//        tasksRepository.deleteEmpTasks(id);
+        tasksRepository.removeEmpTask(id);
         employeesRepository.removeEmployee(id);
     }
 }
