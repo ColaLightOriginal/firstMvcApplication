@@ -7,8 +7,6 @@ import java.util.List;
 public interface TasksRepositoryInterface {
     List<Task> getAllTasks();
     List<Task> getEmpTasks(int employeeId);
-    List<Task> getTasksWithMaxPriority(int employeeId);
-    int findMaxPriority(int employeeId);
-    int getMaxId();
     void addTask(int employeeId, String description, int priority);
+    void removeTask(int taskId);
 }

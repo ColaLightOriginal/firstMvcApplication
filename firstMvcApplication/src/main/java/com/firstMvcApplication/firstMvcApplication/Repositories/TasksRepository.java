@@ -3,6 +3,7 @@ package com.firstMvcApplication.firstMvcApplication.Repositories;
 
 import com.firstMvcApplication.firstMvcApplication.Classes.Task;
 import com.firstMvcApplication.firstMvcApplication.Interfaces.TasksRepositoryInterface;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import sun.awt.image.ImageWatched;
@@ -41,7 +42,7 @@ public class TasksRepository implements TasksRepositoryInterface {
     public List<Task> getEmpTasks(int employeeId) {
         List<Task> resultList = new LinkedList<>();
         try{
-            String query = "select empId from Task task where empId = :empId";
+            String query = "select task from Task task where empId = :empId";
             TypedQuery<Task> tq = sessionFactory.createQuery(query,Task.class);
             tq.setParameter("empId", employeeId);
             resultList = tq.getResultList();
@@ -53,25 +54,34 @@ public class TasksRepository implements TasksRepositoryInterface {
     }
 
     @Override
-    public int findMaxPriority(int employeeId) {
-        return 0;
-    }
-
-    @Override
-    public List<Task> getTasksWithMaxPriority(int employeeId) {
-        List<Task> tasks = new LinkedList<Task>();
-        return tasks;
-    }
-
-    @Override
-    public int getMaxId(){
-        return 0;
-    }
-
-    @Override
     public void addTask(int employeeId, String description, int priority){
+        try {
+            int maxId;
+            Session session = sessionFactory.unwrap(Session.class);
+            session.beginTransaction();
+            Task tsk = new Task();
+            tsk.setEmpId(employeeId);
+            tsk.setDescription(description);
+            tsk.setPriority(priority);
+            session.save(tsk);
+            session.getTransaction().commit();
+            session.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
-    public void deleteEmpTasks(int empId){
+    @Override
+    public void removeTask(int taskId){
+        try {
+            Session session = sessionFactory.unwrap(Session.class);
+            session.beginTransaction();
+            Task tsk = session.get(Task.class, taskId);
+            session.delete(tsk);
+            session.getTransaction().commit();
+            session.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

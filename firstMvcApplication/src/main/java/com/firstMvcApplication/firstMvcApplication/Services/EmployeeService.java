@@ -33,7 +33,7 @@ public class EmployeeService {
     }
 
     public void deleteEmployee(int id){
-        tasksRepository.deleteEmpTasks(id);
+//        tasksRepository.deleteEmpTasks(id);
         employeesRepository.removeEmployee(id);
     }
 }
