@@ -1,11 +1,25 @@
 package com.firstMvcApplication.firstMvcApplication.Classes;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "task")
 public class Task {
 
+    @Id
+    @Column(name = "id", unique = true)
     private int id;
+    @Column(name = "description", nullable = false)
     private String description;
+    @Column(name = "priority", nullable = false)
     private int priority;
+    @Column(name = "emp_id", nullable = false)
     private int empId;
+
+    public Task(){ }
 
     public int getId() {
         return id;
@@ -39,7 +53,7 @@ public class Task {
 
     public Task(int id, int empId, String description, int priority){
         this.id=id;
-        this.empId=empId;
+        this.empId =empId;
         this.description=description;
         this.priority=priority;
     }
