@@ -97,12 +97,15 @@ public class EmployeeRepository implements EmployeesRepositoryInterface{
         }
     }
 
-    public void removeEmployee(int id){
+    public void removeEmployee(int id, Session session){
         try {
-            Session session = sessionFactory.unwrap(Session.class);
+            if( session.isOpen()==false) {
+                session = sessionFactory.unwrap(Session.class);
+                session.beginTransaction();
+            }
             Employee emp = session.get(Employee.class,id);
             session.delete(emp);
-            session.getTransaction().commit();
+
         }catch (Exception e){
             e.printStackTrace();
         }
